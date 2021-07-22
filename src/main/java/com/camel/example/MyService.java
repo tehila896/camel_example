@@ -38,7 +38,6 @@ public class MyService {
     LocalDate firstFriday = start.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
     LocalDate lastFriday = end.with(TemporalAdjusters.previousOrSame(DayOfWeek.FRIDAY));
     count_friday = ChronoUnit.WEEKS.between(firstFriday, lastFriday);
-    return (int) (count_friday + 1);
-
+    return (int) (count_friday+1);
      }
 }
