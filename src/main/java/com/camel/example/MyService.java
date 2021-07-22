@@ -22,7 +22,7 @@ public class MyService {
     CamelContext context;
     public int helloWithName(@Header("input") String input) throws ParseException {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd", Locale.ENGLISH);
-    String dateInString ="2021-07-16";
+    String dateInString =input;
     Date input_date = simpleDateFormat.parse(dateInString); 
     Instant instantj = input_date.toInstant();
     ZonedDateTime zdtk = instantj.atZone(ZoneId.systemDefault());
