@@ -18,30 +18,24 @@ public class MyService {
 
     CamelContext context;
     public int helloWithName(@Header("input") String input) throws ParseException {
-    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd");
-        String dateInString =input;
-        simpleDateFormat.setLenient(false);
-        simpleDateFormat.parse(dateInString);   
-        Date input_date = simpleDateFormat.parse(dateInString); 
-        Instant instantj = input_date.toInstant();
-        ZonedDateTime zdtk = instantj.atZone(ZoneId.systemDefault());
-        LocalDate start = zdtk.toLocalDate();
-        LocalDate end = LocalDate.now();  
-        DayOfWeek startW = start.getDayOfWeek();
-        DayOfWeek endW = end.getDayOfWeek();
-        long days =Math.abs(ChronoUnit.DAYS.between(start, end)/7);
-        if(start.isBefore(end))
-        {
-            days += (endW.getValue()<=startW.getValue())?1:0;
-            if(startW.getValue()>5)
-                 days--;
-        }
-        else
-        {
-            days += (startW.getValue()<=endW.getValue())?1:0;
-            if(startW.getValue()<5)
-                 days--;
-        }
-        return (int) days;
-        }
+    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd", Locale.ENGLISH);
+    String dateInString ="2021-07-16";
+    Date input_date = simpleDateFormat.parse(dateInString); 
+    Instant instantj = input_date.toInstant();
+    ZonedDateTime zdtk = instantj.atZone(ZoneId.systemDefault());
+    long count_friday = 0;  
+    LocalDate start = zdtk.toLocalDate();
+    LocalDate end = LocalDate.now(); 
+    if(start.isAfter(end))
+    {
+        LocalDate temp=start;
+        start=end;
+        end=temp;
+    }
+    LocalDate firstFriday = start.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+    LocalDate lastFriday = end.with(TemporalAdjusters.previousOrSame(DayOfWeek.FRIDAY));
+    count_friday = ChronoUnit.WEEKS.between(firstFriday, lastFriday);
+    return count_friday + 1;
+
+     }
 }
