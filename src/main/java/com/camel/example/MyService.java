@@ -31,9 +31,17 @@ public class MyService {
         DayOfWeek endW = end.getDayOfWeek();
         long days =Math.abs(ChronoUnit.DAYS.between(start, end)/7);
         if(start.isBefore(end))
+        {
             days += (endW.getValue()<=startW.getValue())?1:0;
+            if(startW.getValue()>5)
+                 days--;
+        }
         else
+        {
             days += (startW.getValue()<=endW.getValue())?1:0;
+            if(startW.getValue()<5)
+                 days--;
+        }
         return (int) days;
         }
 }
