@@ -1,0 +1,8 @@
+camel:
+  component:
+    servlet:
+      mapping:
+        contextPath: /test/*
+
+server:
+  port: 12345
